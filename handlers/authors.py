@@ -1,8 +1,10 @@
+import logging
+
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, ReplyKeyboardRemove, FSInputFile
+from aiogram.types import Message, FSInputFile
 
 from keyboards.authors import make_authors_kb
 from keyboards.main_menu import make_main_menu
@@ -27,8 +29,9 @@ async def cmd_choose_author(message: Message, state: FSMContext):
     ChooseAuthor.choosing_author, 
     F.text.in_(names)
 )
-
 async def show_author_info(message: Message, state: FSMContext):
+    logging.info(f"show_author_info: {message.from_user.full_name}")    
+    
     image_from_pc = FSInputFile(f'images/{writers[message.text][0]}')
     await message.answer_photo(
         image_from_pc,

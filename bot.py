@@ -1,12 +1,13 @@
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher
+from aiogram import Dispatcher
 from handlers import authors, common, predict, rate
 from main.botdef import bot 
 
 # Запуск процесса поллинга новых апдейтов
 async def main():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(filename='bot.log', encoding='utf-8', level=logging.INFO)
+    #logging.basicConfig(level=logging.INFO)
 
     dp = Dispatcher()
     dp.include_routers(common.router, predict.router, authors.router, rate.router)   

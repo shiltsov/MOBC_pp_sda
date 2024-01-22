@@ -1,16 +1,15 @@
 import logging
 
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, ReplyKeyboardRemove, FSInputFile
+from aiogram.types import Message, ReplyKeyboardRemove
 
 from keyboards.model_select import make_model_kb
 from keyboards.main_menu import make_main_menu
-from handlers.utils import label2name, writers
 from aiogram.utils.formatting import (
-    Bold, as_list, as_marked_section, as_key_value, HashTag
+    Bold, as_list, as_marked_section
 )
 from aiogram.types import ContentType
 from handlers.utils import infer_one
@@ -53,6 +52,9 @@ async def cmd_choose_method(message: Message, state: FSMContext):
     F.text
 )
 async def show_predict(message: Message, state: FSMContext):
+    
+    logging.info(f"show_predict: {message.from_user.full_name}")    
+    
     user_data = await state.get_data()    
     res = infer_one(message.text, model = user_data['choosen_model'])    
     
@@ -84,19 +86,18 @@ async def show_predict(message: Message, state: FSMContext):
 @router.message(
     ChooseMethod.waiting_data, 
 )
-async def show_predict(message: Message, state: FSMContext, content_types=ContentType.DOCUMENT):
+async def show_predict_file(message: Message, state: FSMContext, content_types=ContentType.DOCUMENT):
     global bot
     
     # считываем присланный файл
-    logging.info(f"Получен файл")
+    logging.info(f"show_predict_file: file received. {message.from_user.full_name}")
     file_id = message.document.file_id
     file = await bot.get_file(file_id)
     file_path = file.file_path
     file_data = await bot.download_file(file_path)
     file_content = file_data.read()
-    logging.info(f"Файл прочитан")
+    logging.info(f"show_predict_file: file was red. {message.from_user.full_name}")
     text_from_file = file_content.decode("utf-8").strip()
-    logging.info(f"Преобразованы байтовые данные в строку")
         
     user_data = await state.get_data()    
     res = infer_one(text_from_file, model = user_data['choosen_model'])    

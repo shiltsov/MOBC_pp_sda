@@ -1,8 +1,9 @@
+import logging
 from aiogram import Router, F
-from aiogram.filters import Command, StateFilter
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, ReplyKeyboardRemove, FSInputFile
+from aiogram.types import Message 
 
 from keyboards.rate import make_rating_kb, rates
 from keyboards.main_menu import make_main_menu
@@ -27,6 +28,7 @@ async def cmd_rate(message: Message, state: FSMContext):
     F.text
 )
 async def show_rating_info(message: Message, state: FSMContext):
+    logging.info(f"show_rating_info: {message.from_user.full_name}")    
     vote = int(message.text)
 
     if vote in range(1,6):

@@ -1,16 +1,15 @@
+import logging
 from aiogram import F, Router
 from aiogram.filters import Command
-from aiogram.filters import StateFilter
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import default_state
-from aiogram.types import Message, ReplyKeyboardRemove
 from keyboards.main_menu import make_main_menu
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message
 
 router = Router()
 
 @router.message(Command("start"))
 async def cmd_start(message: Message):
+    logging.info(f"cmd_start: {message.from_user.full_name}")    
+    
     await message.answer(f"""
 Приветствую {message.from_user.full_name}!                         
 <b>Добро пожаловать в бот определения авторства текста</b>.
@@ -19,7 +18,9 @@ async def cmd_start(message: Message):
     
     
 @router.message(F.text.in_("О проекте"))
-async def cmd_start(message: Message):
+async def cmd_info(message: Message):
+    logging.info(f"cmd_info: {message.from_user.full_name}")
+    
     await message.answer(f"""
 <b>Телеграм-бот определения авторства текстов.</b>
 

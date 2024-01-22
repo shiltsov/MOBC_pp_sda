@@ -1,4 +1,5 @@
 passwords.txt
+*.log
 **/__pycache__/
 /venv/*
 .env

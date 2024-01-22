@@ -4,9 +4,8 @@ import joblib
 import numpy as np
 
 from pymystem3 import Mystem
-from sklearn.linear_model import LogisticRegression # можно заменить на любимый классификатор
+from sklearn.linear_model import LogisticRegression 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-
 
 vectorizer = [joblib.load('models/cv-ngram-13.bin'), joblib.load('models/tfidf-ngram-23.bin')]
 clf = [joblib.load('models/lr-cv-ngram-13.bin'), joblib.load('models/lr-tfidf-ngram-23.bin')]
