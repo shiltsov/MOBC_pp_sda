@@ -43,3 +43,9 @@ async def cmd_info(message: Message):
 интеграция ML модели с телеграм-ботом) + постарался все по-феншую разложить по модулям. 
 
 """, reply_markup=make_main_menu())    
+    
+@router.message(F.text)
+async def unknown_command(message: Message):
+    logging.info(f"cmd_unknown: {message.from_user.full_name}")    
+    await message.answer(f"Вы отправили незнакомую мне команду", reply_markup=make_main_menu())
+    
