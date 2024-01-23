@@ -42,3 +42,15 @@ async def show_author_info(message: Message, state: FSMContext):
         reply_markup=make_main_menu()
     )
     await state.clear()
+
+# если сделан неверный выбор - остаемся на месте    
+@router.message(
+    ChooseAuthor.choosing_author 
+)
+async def show_author_error(message: Message, state: FSMContext):
+    # заносим в стейт какую модель выбрал    
+    await message.answer(
+        text="Неверный выбор автора",
+        reply_markup= make_authors_kb()
+    )
+    await state.set_state(ChooseAuthor.choosing_author)

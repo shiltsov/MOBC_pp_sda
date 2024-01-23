@@ -29,9 +29,9 @@ async def cmd_rate(message: Message, state: FSMContext):
 )
 async def show_rating_info(message: Message, state: FSMContext):
     logging.info(f"show_rating_info: {message.from_user.full_name}")    
-    vote = int(message.text)
 
-    if vote in range(1,6):
+    if message.text in ['1','2','3','4','5']:
+        vote = int(message.text)
         votes.append(vote)
         rank = sum(votes) / len(votes)
         await message.answer(f"""

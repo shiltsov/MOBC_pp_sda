@@ -46,6 +46,20 @@ async def cmd_choose_method(message: Message, state: FSMContext):
     )
     await state.set_state(ChooseMethod.waiting_data)
 
+# если сделан неверный выбор - остаемся на месте    
+@router.message(
+    ChooseMethod.choosing_method, 
+)
+async def cmd_choose_method_error(message: Message, state: FSMContext):
+    # заносим в стейт какую модель выбрал    
+    await state.update_data(choosen_model = 0 if message.text == 'BOW' else 1)
+    await message.answer(
+        text="Неверный выбор модели",
+        reply_markup= make_model_kb()
+    )
+    await state.set_state(ChooseMethod.choosing_method)
+
+
 # третий (финальный) шаг КА - получили текст, запредиктили и выдаем главное меню. Обнуляем состояние
 @router.message(
     ChooseMethod.waiting_data, 
