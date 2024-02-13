@@ -1,5 +1,7 @@
+poetry.lock
 passwords.txt
 *.log
 **/__pycache__/
 /venv/*
+/myenv/*
 .env
