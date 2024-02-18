@@ -11,7 +11,6 @@ from keyboards.main_menu import make_main_menu
 from aiogram.utils.formatting import Bold, as_list, as_marked_section
 from aiogram.types import ContentType
 from handlers.utils import infer_one
-
 from main.botdef import bot
 
 names = ["BOW", "TFIDF"]
@@ -93,7 +92,6 @@ async def show_predict(message: Message, state: FSMContext):
 async def show_predict_file(
     message: Message, state: FSMContext, content_types=ContentType.DOCUMENT
 ):
-    # global bot
 
     # считываем присланный файл
     logging.info(f"show_predict_file: file received. {message.from_user.full_name}")
