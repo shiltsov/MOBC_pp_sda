@@ -9,7 +9,7 @@
 для тестов использовался форк библиотеки aiogram-tests умеющий частично работать в версией aiogram-3.3 
 (git = "https://github.com/Like6po/aiogram_tests.git") 
 
-результаты прохождения юнит-тестов
+результаты прохождения юнит-тестов (`$pytest --cov=handlers --cov-report=html tests/`)
 
 ![изображение](https://github.com/shiltsov/MOBC_pp_sda/assets/54742337/0d5d6db3-196d-4e08-bdb4-fb39b5a2636e)
 
