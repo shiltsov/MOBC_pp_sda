@@ -29,12 +29,12 @@ async def test_cmd_choose_method():
         message=MESSAGE.as_object(text="Определить авторство")
     )
     answer_message = calls.send_message.fetchone()
-    assert answer_message.text == f"Выберите модель:"
+    assert answer_message.text == "Выберите модель:"
     assert "keyboard" in answer_message.reply_markup
 
 
 @pytest.mark.asyncio
-async def test_cmd_choose_method():
+async def test_cmd_choose_method_stated():
     requester = MockedBot(
         MessageHandler(cmd_choose_method, state=ChooseMethod.choosing_method)
     )

@@ -6,22 +6,23 @@ from aiogram.types import Message
 
 router = Router()
 
+
 @router.message(Command("start"))
 async def cmd_start(message: Message):
-    logging.info(f"cmd_start: {message.from_user.full_name}")    
-    
-    await message.answer(f"""
-Приветствую {message.from_user.full_name}!                         
-<b>Добро пожаловать в бот определения авторства текста</b>.
-Вы в главном меню. Выберите, что хотите сделать
-""", reply_markup=make_main_menu())
-    
-    
+    logging.info(f"cmd_start: {message.from_user.full_name}")
+
+    await message.answer(
+        f"Приветствую {message.from_user.full_name}!\n<b>Добро пожаловать в бот определения авторства текста</b>.Вы в главном меню. Выберите, что хотите сделать",
+        reply_markup=make_main_menu(),
+    )
+
+
 @router.message(F.text.in_("О проекте"))
 async def cmd_info(message: Message):
     logging.info(f"cmd_info: {message.from_user.full_name}")
-    
-    await message.answer(f"""
+
+    await message.answer(
+        """
 <b>Телеграм-бот определения авторства текстов.</b>
 
 Автор: Дмитрий Шильцов (ВШЭ МОВС [a23])
@@ -31,7 +32,7 @@ async def cmd_info(message: Message):
 - <b>Определить авторство</b> (из 10 заранее заданных русских классиков) по заданному фрагменту текста
 или текстовому файлу. Этот модуль реализован через FSM - есть промежуточный узел выбора модели.
 Анализ производится не по словам а по частям речи и пунктуации, то есть части речи с учетом словаформы и знаки препинания
-кодируются как "слова", далее полученное кодируется на выбор либо BOW либо TFIDF и скармливается соответствующей линейной модели. 
+кодируются как "слова", далее полученное кодируется на выбор либо BOW либо TFIDF и скармливается соответствующей линейной модели.
 После выбора модели можно либо скормить текст либо прикрепить текстовый файл (utf-8) и получить предикт.
 
 - <b>Голосовать</b> - тут все стандартно. голосуем по 5 бальной шкале и видим статистику по голосованиям. Реализовал без премудростей,
@@ -39,13 +40,17 @@ async def cmd_info(message: Message):
 
 - <b>О писателях</b> - краткая информация о писателях с фото - просто хотел научиться делать сообщения с файлами и меню со всякими кнопочками
 
-<b>Резюме:</b> в целом все основные возможности библиотеки aiogram мною освоены (прием и передача файлов, задание поведения бота с помощью FSM, 
-интеграция ML модели с телеграм-ботом) + постарался все по-феншую разложить по модулям. 
+<b>Резюме:</b> в целом все основные возможности библиотеки aiogram мною освоены (прием и передача файлов, задание поведения бота с помощью FSM,
+интеграция ML модели с телеграм-ботом) + постарался все по-феншую разложить по модулям.
 
-""", reply_markup=make_main_menu())    
-    
+""",
+        reply_markup=make_main_menu(),
+    )
+
+
 @router.message(F.text)
 async def unknown_command(message: Message):
-    logging.info(f"cmd_unknown: {message.from_user.full_name}")    
-    await message.answer(f"Вы отправили незнакомую мне команду", reply_markup=make_main_menu())
-    
+    logging.info(f"cmd_unknown: {message.from_user.full_name}")
+    await message.answer(
+        "Вы отправили незнакомую мне команду", reply_markup=make_main_menu()
+    )

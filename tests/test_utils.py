@@ -1,5 +1,3 @@
-import pytest
-
 from handlers.utils import (
     clean_sentence,
     make_punkt,

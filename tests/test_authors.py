@@ -1,12 +1,11 @@
 import pytest
 
 from handlers.authors import cmd_choose_author, show_author_info, show_author_error
-from handlers.authors import names, ChooseAuthor
+from handlers.authors import ChooseAuthor
 
 from aiogram_tests import MockedBot
 from aiogram_tests.handler import MessageHandler
 from aiogram_tests.types.dataset import MESSAGE
-from aiogram.filters import Command
 
 
 @pytest.mark.asyncio
@@ -14,7 +13,7 @@ async def test_cmd_choose_author():
     requester = MockedBot(MessageHandler(cmd_choose_author, state=None))
     calls = await requester.query(message=MESSAGE.as_object(text="О писателях"))
     answer_message = calls.send_message.fetchone()
-    assert answer_message.text == f"Выберите писателя:"
+    assert answer_message.text == "Выберите писателя:"
     assert "keyboard" in answer_message.reply_markup
 
 

@@ -13,7 +13,7 @@ async def test_cmd_rate():
     requester = MockedBot(MessageHandler(cmd_rate, state=None))
     calls = await requester.query(message=MESSAGE.as_object(text="Голосовать"))
     answer_message = calls.send_message.fetchone()
-    assert answer_message.text == f"Оцените работу бота:"
+    assert answer_message.text == "Оцените работу бота:"
     assert "keyboard" in answer_message.reply_markup
 
 
