@@ -2,6 +2,9 @@ poetry.lock
 passwords.txt
 *.log
 **/__pycache__/
-/venv/*
-/myenv/*
+venv/*
+myenv/*
+htmlcov/*
 .env
+.pytest_cache/*
+.coverage

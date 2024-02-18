@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import create_autospec, patch
 
-from io import StringIO
+from io import BytesIO
 
 from handlers.predict import (
     cmd_choose_method,
@@ -20,7 +20,10 @@ from main.botdef import bot
 
 
 # пропачим для того чтобы проверить работу с файлами
-mock_download = create_autospec(bot.download, side_effect=StringIO("Карабамба"))
+mock_download = create_autospec(
+    bot.download,
+    return_value=BytesIO("карабамба".encode('utf-8'))
+)
 
 
 @pytest.mark.asyncio
